@@ -40,7 +40,7 @@ type Item[T any] struct {
 // NewApp creates a new App application struct
 func NewApp() *App {
 	clockTz := []string{"EST", "CST", "MST", "PST", "IST"}
-	countdowns := []int64{1, 10, 15, 20, 45, 60, 90}
+	countdowns := []int64{1, 10, 15, 20, 30, 45, 60, 90}
 	ticker := time.NewTicker(1)
 	ticker.Stop()
 
