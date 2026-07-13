@@ -58,6 +58,7 @@ export namespace main {
 	    countdowns: Countdown[];
 	    countdown?: Countdown;
 	    segmented?: SegmentedDuration;
+	    endsin: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new Data(source);
@@ -70,6 +71,7 @@ export namespace main {
 	        this.countdowns = this.convertValues(source["countdowns"], Countdown);
 	        this.countdown = this.convertValues(source["countdown"], Countdown);
 	        this.segmented = this.convertValues(source["segmented"], SegmentedDuration);
+	        this.endsin = source["endsin"];
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {

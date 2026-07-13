@@ -6,6 +6,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/dustin/go-humanize"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
@@ -22,6 +23,7 @@ type App struct {
 	countdownSelectCh chan (int64)
 	countdownValue    int64
 	debug             bool
+	endingTime        *time.Time
 }
 
 func newElemet[T any](options []T) Item[T] {
@@ -82,6 +84,21 @@ func NewApp() *App {
 	}
 
 	return app
+}
+
+func (this *App) setEndingTime() {
+	loc, err := time.LoadLocation(tz2Loc["CST"])
+	if err != nil {
+		loc = time.FixedZone("CST", -6*60*60)
+	}
+
+	now := time.Now().In(loc)
+
+	if this.endingTime == nil || this.endingTime.Day() != now.Day() {
+		t := time.Date(now.Year(), now.Month(), now.Day(), 16, 0, 0, 0, loc)
+		// t := time.Date(now.Year(), now.Month(), now.Day(), 10, 0, 0, 0, loc)
+		this.endingTime = &t
+	}
 }
 
 func (this *App) startup(ctx context.Context) {
@@ -176,6 +193,10 @@ func (this *App) GetCurrentTimes() (Data, error) {
 		this.countdownValue -= 1
 		data.Segmented = NewSegmentedDuration(this.countdownValue)
 	}
+
+	this.setEndingTime()
+
+	data.EndsIn = humanize.Time(*this.endingTime)
 
 	// if this.debug {
 	// 	godump.Dump(data.Segmented)

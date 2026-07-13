@@ -11,6 +11,7 @@ type Data struct {
 	Countdowns []*Countdown       `json:"countdowns"`
 	Countdown  *Countdown         `json:"countdown"`
 	Segmented  *SegmentedDuration `json:"segmented"`
+	EndsIn     string             `json:"endsin"`
 }
 
 type Clock struct {

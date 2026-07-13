@@ -44,6 +44,10 @@
 </script>
 
 <main>
+    <section class="endsIn">
+        Class ends {$data.endsin}
+    </section>
+
     <section class="clockSection">
         {#if $data.clocks}
             {#each $data.clocks as clock}
@@ -96,10 +100,18 @@
         padding-inline: 1rem;
     }
 
+    .endsIn {
+        color: grey;
+        display: flex;
+        justify-content: center;
+        font-size: small;
+    }
+
     .countDown {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-grow: 1;
         gap: 2rem;
 
         & section {
